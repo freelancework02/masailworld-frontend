@@ -13,7 +13,7 @@ document.getElementById('fatwa-form').addEventListener('submit', async function(
         Writer: document.getElementById('fatwa-mufti').value
     };
 
-    let url = 'http://localhost:5000/api/fatwa';
+    let url = 'https://masailworld.onrender.com/api/fatwa';
     let method = 'POST';
 
     // If fatwaId exists, it's an edit
@@ -56,7 +56,7 @@ document.getElementById('category-form').addEventListener('submit', async functi
         IconClass: document.getElementById('category-icon').value
     };
 
-    let url = 'http://localhost:5000/api/topic';
+    let url = 'https://masailworld.onrender.com/api/topic';
     let method = 'POST';
     if (categoryId) {
         url += `/${categoryId}`;
@@ -111,7 +111,7 @@ document.getElementById('ulema-form').addEventListener('submit', async function 
         formData.append('Photo', photoInput.files[0]);
     }
 
-    let url = 'http://localhost:5000/api/writer';
+    let url = 'https://masailworld.onrender.com/api/writer';
     let method = 'POST';
     if (writerId) {
         url += `/${writerId}`;
@@ -170,7 +170,7 @@ document.getElementById('article-form').addEventListener('submit', async functio
         formData.append('FeaturedImage', imageInput.files[0]);
     }
 
-    let url = 'http://localhost:5000/api/article';
+    let url = 'https://masailworld.onrender.com/api/article';
     let method = 'POST';
     if (articleId) {
         url += `/${articleId}`;
@@ -223,7 +223,7 @@ document.getElementById('book-form').addEventListener('submit', async function(e
         formData.append('PDFFile', pdfInput.files[0]);
     }
 
-    let url = 'http://localhost:5000/api/book';
+    let url = 'https://masailworld.onrender.com/api/book';
     let method = 'POST';
     if (bookId) {
         url += `/${bookId}`;
@@ -268,7 +268,7 @@ document.getElementById('book-form').addEventListener('submit', async function(e
 
 
 function fetchFatawa() {
-    fetch('http://localhost:5000/api/fatwa')
+    fetch('https://masailworld.onrender.com/api/fatwa')
         .then(response => response.json())
         .then(data => {
             const tableBody = document.getElementById('fatawa-table-body');
@@ -303,7 +303,7 @@ function fetchFatawa() {
 
 function editFatwa(fatwaId) {
     // 1. Fetch record from API (if not already available)
-    fetch(`http://localhost:5000/api/fatwa/${fatwaId}`)
+    fetch(`https://masailworld.onrender.com/api/fatwa/${fatwaId}`)
         .then(response => response.json())
         .then(data => {
             const fatwa = Array.isArray(data) ? data[0] : (data.data || data);
@@ -330,7 +330,7 @@ function editFatwa(fatwaId) {
 function deleteFatwa(id) {
     const confirmDelete = confirm('کیا آپ واقعی اس فتویٰ کو حذف کرنا چاہتے ہیں؟');
     if (confirmDelete) {
-        fetch(`http://localhost:5000/api/fatwa/${id}`, {
+        fetch(`https://masailworld.onrender.com/api/fatwa/${id}`, {
             method: 'DELETE'
         })
         .then(res => res.json())
@@ -355,7 +355,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 function fetchArticles() {
-    fetch('http://localhost:5000/api/article')
+    fetch('https://masailworld.onrender.com/api/article')
         .then(response => response.json())
         .then(data => {
            
@@ -414,7 +414,7 @@ function formatDate(dateString) {
 
 // Example placeholder functions
 function editArticle(articleId) {
-    fetch(`http://localhost:5000/api/article/${articleId}`)
+    fetch(`https://masailworld.onrender.com/api/article/${articleId}`)
         .then(res => res.json())
         .then(article => {
             document.getElementById('article-id').value = article.ArticleID;
@@ -435,7 +435,7 @@ function editArticle(articleId) {
 function deleteArticle(id) {
     const confirmDelete = confirm('کیا آپ واقعی اس مضمون کو حذف کرنا چاہتے ہیں؟');
     if (confirmDelete) {
-        fetch(`http://localhost:5000/api/article/${id}`, {
+        fetch(`https://masailworld.onrender.com/api/article/${id}`, {
             method: 'DELETE'
         })
         .then(res => res.json())
@@ -456,7 +456,7 @@ function deleteArticle(id) {
 
 
 function fetchBooks() {
-    fetch('http://localhost:5000/api/book')
+    fetch('https://masailworld.onrender.com/api/book')
         .then(response => response.json())
         .then(data => {
             console.log("book response", data)
@@ -506,7 +506,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Placeholder functions
 function editBook(bookId) {
-    fetch(`http://localhost:5000/api/book/${bookId}`)
+    fetch(`https://masailworld.onrender.com/api/book/${bookId}`)
         .then(res => res.json())
         .then(book => {
             // Fill the form
@@ -526,7 +526,7 @@ function editBook(bookId) {
 function deleteBook(bookId) {
     const confirmDelete = confirm('کیا آپ واقعی اس کتاب کو حذف کرنا چاہتے ہیں؟');
     if (confirmDelete) {
-        fetch(`http://localhost:5000/api/book/${bookId}`, {
+        fetch(`https://masailworld.onrender.com/api/book/${bookId}`, {
             method: 'DELETE'
         })
         .then(res => res.json())
@@ -548,7 +548,7 @@ function deleteBook(bookId) {
 
 
 function fetchWriters() {
-    fetch('http://localhost:5000/api/writer')
+    fetch('https://masailworld.onrender.com/api/writer')
         .then(response => response.json())
         .then(data => {
             const tableBody = document.getElementById('ulema-table-body');
@@ -595,7 +595,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Placeholder actions
 function editWriter(writerId) {
-    fetch(`http://localhost:5000/api/writer/${writerId}`)
+    fetch(`https://masailworld.onrender.com/api/writer/${writerId}`)
         .then(res => res.json())
         .then(writer => {
             document.getElementById('ulema-id').value = writer.WriterID;
@@ -616,7 +616,7 @@ function editWriter(writerId) {
 function deleteWriter(WriterID) {
     const confirmDelete = confirm('کیا آپ واقعی اس عالم کو حذف کرنا چاہتے ہیں؟');
     if (confirmDelete) {
-        fetch(`http://localhost:5000/api/writer/${WriterID}`, {
+        fetch(`https://masailworld.onrender.com/api/writer/${WriterID}`, {
             method: 'DELETE'
         })
         .then(res => res.json())
@@ -637,7 +637,7 @@ function deleteWriter(WriterID) {
 
 
 function fetchTopic() {
-    fetch('http://localhost:5000/api/topic')
+    fetch('https://masailworld.onrender.com/api/topic')
         .then(response => response.json())
         .then(data => {
             const tableBody = document.getElementById('categories-table-body');
@@ -686,7 +686,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Optional edit/delete handlers
 function editTopic(topicId) {
-    fetch(`http://localhost:5000/api/topic/${topicId}`)
+    fetch(`https://masailworld.onrender.com/api/topic/${topicId}`)
         .then(res => res.json())
         .then(topic => {
             document.getElementById('category-id').value = topic.TopicID;
@@ -704,7 +704,7 @@ function editTopic(topicId) {
 
 function deleteTopic(id) {
     if (confirm("کیا آپ واقعی اس موضوع کو حذف کرنا چاہتے ہیں؟")) {
-        fetch(`http://localhost:5000/api/topic/${id}`, {
+        fetch(`https://masailworld.onrender.com/api/topic/${id}`, {
             method: 'DELETE'
         })
         .then(res => res.json())
