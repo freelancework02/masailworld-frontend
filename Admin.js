@@ -718,3 +718,54 @@ function deleteTopic(id) {
     }
 }
 
+
+
+
+// User insert 
+
+document.getElementById('ms-user-form').addEventListener('submit', async function(event) {
+  event.preventDefault();
+
+  // Grab form values
+  const username = document.getElementById('ms-user-name').value.trim();
+  const email = document.getElementById('ms-user-email').value.trim();
+  const password = document.getElementById('ms-user-password').value;
+  const confirmPassword = document.getElementById('ms-user-confirm-password').value;
+
+  // Basic client-side validation
+  if (!username || !email || !password) {
+    alert('براہ کرم تمام required fields کو مکمل کریں۔');
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    alert('پاس ورڈ اور تصدیق شدہ پاس ورڈ میل نہیں کھاتے۔');
+    return;
+  }
+
+  try {
+    // Send data to backend API to create user
+    const response = await fetch('http://localhost:5000/api/users', {  // Adjust endpoint base URL as needed
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, email, password }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert('نیا صارف کامیابی کے ساتھ شامل کردیا گیا۔');
+      // Optionally, reset the form or redirect to some other page
+      this.reset();
+    } else {
+      // Show error from backend
+      alert(data.error || 'صارف بنانے میں خرابی ہوئی۔');
+    }
+  } catch (error) {
+    alert('سرور سے رابطہ کرنے میں مسئلہ پیش آیا۔');
+    console.error('Error:', error);
+  }
+});
+
