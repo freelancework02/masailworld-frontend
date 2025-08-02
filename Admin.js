@@ -1,47 +1,80 @@
-//Add Fatwa 
-document.getElementById('fatwa-form').addEventListener('submit', async function(e) {
-    e.preventDefault();
+async function populateTopicsDropdown() {
+  const select = document.getElementById('fatwa-topic');
+  try {
+    const response = await fetch('https://masailworld.onrender.com/api/topic'); // Adjust URL to your backend API
+    if (!response.ok) throw new Error('موضوعات لوڈ کرنے میں مسئلہ');
+    const topics = await response.json();
 
-    const fatwaId = document.getElementById('fatwa-id').value;
-    const data = {
-        Title: document.getElementById('fatwa-title').value,
-        Slug: document.getElementById('fatwa-slug').value,
-        Tags: document.getElementById('fatwa-keywords').value,
-        Description: document.getElementById('fatwa-meta-description').value,
-        Question: document.getElementById('fatwa-question').value,
-        Answer: document.getElementById('fatwa-answer').value,
-        Writer: document.getElementById('fatwa-mufti').value
-    };
+    // Clear current options except placeholder
+    select.innerHTML = '<option value="">منتخب کریں</option>';
 
-    let url = 'https://masailworld.onrender.com/api/fatwa';
-    let method = 'POST';
+    topics.forEach(topic => {
+      const option = document.createElement('option');
+      option.value = topic.TopicID; // Use ID or name based on your backend design
+      option.textContent = topic.TopicName;
+      select.appendChild(option);
+    });
+  } catch (error) {
+    console.error('Error loading topics:', error);
+    alert('موضوعات لوڈ کرنے میں خرابی۔');
+  }
+}
 
-    // If fatwaId exists, it's an edit
-    if (fatwaId) {
-        url += `/${fatwaId}`;
-        method = 'PUT'; // Or PATCH, depending on your API
-    }
-
-    try {
-        const response = await fetch(url, {
-            method,
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
-
-        const result = await response.json();
-        if (response.ok) {
-            alert('فتویٰ کامیابی سے ' + (fatwaId ? 'اپ ڈیٹ ' : 'شامل') + ' ہو گیا!\nID: ' + result.fatwaId);
-            this.reset();
-            // Optionally redirect
-            // window.location.hash = "manage-fatawa";
-        } else {
-            alert('سرور پر خرابی:\n' + (result.error || 'نامعلوم'));
-        }
-    } catch (err) {
-        alert('سرور سے کنیکشن میں مسئلہ:\n' + err.message);
-    }
+document.addEventListener('DOMContentLoaded', () => {
+  populateTopicsDropdown();
 });
+
+//Add Fatwa 
+document.getElementById('fatwa-form').addEventListener('submit', async function (e) {
+  e.preventDefault();
+
+  const fatwaId = document.getElementById('fatwa-id').value;
+
+  const topicSelect = document.getElementById('fatwa-topic');
+  const selectedTopicId = topicSelect.value;
+  const selectedTopicName = topicSelect.options[topicSelect.selectedIndex]?.text || '';
+
+  const data = {
+    Title: document.getElementById('fatwa-title').value,
+    Slug: document.getElementById('fatwa-slug').value,
+    Tags: document.getElementById('fatwa-keywords').value,
+    Description: document.getElementById('fatwa-meta-description').value,
+    Question: document.getElementById('fatwa-question').value,
+    Answer: document.getElementById('fatwa-answer').value,
+    Writer: document.getElementById('fatwa-mufti').value,
+    TopicID: selectedTopicId,
+    TopicName: selectedTopicName,
+  };
+
+  let url = 'http://localhost:5000/api/fatwa';
+  let method = 'POST';
+
+  if (fatwaId) {
+    url += `/${fatwaId}`;
+    method = 'PUT'; // or PATCH as per your backend
+  }
+
+  try {
+    const response = await fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+    if (response.ok) {
+      alert('فتویٰ کامیابی سے ' + (fatwaId ? 'اپ ڈیٹ ' : 'شامل') + ' ہو گیا!\nID: ' + result.fatwaId);
+      this.reset();
+      // Optionally redirect or update UI
+      window.location.hash = "manage-fatawa";
+    } else {
+      alert('سرور پر خرابی:\n' + (result.error || 'نامعلوم'));
+    }
+  } catch (err) {
+    alert('سرور سے کنیکشن میں مسئلہ:\n' + err.message);
+  }
+});
+
 
 
 
@@ -302,27 +335,36 @@ function fetchFatawa() {
 //Edit fatwa 
 
 function editFatwa(fatwaId) {
-    // 1. Fetch record from API (if not already available)
-    fetch(`https://masailworld.onrender.com/api/fatwa/${fatwaId}`)
-        .then(response => response.json())
-        .then(data => {
-            const fatwa = Array.isArray(data) ? data[0] : (data.data || data);
-            // 2. Show the edit form/page/modal
-            document.getElementById('fatwa-id').value = fatwa.FatwaID;
-            document.getElementById('fatwa-title').value = fatwa.Title;
-            document.getElementById('fatwa-slug').value = fatwa.Slug;
-            document.getElementById('fatwa-keywords').value = fatwa.Tags;
-            document.getElementById('fatwa-meta-description').value = fatwa.Description;
-            document.getElementById('fatwa-question').value = fatwa.Question;
-            document.getElementById('fatwa-answer').value = fatwa.Answer;
-            document.getElementById('fatwa-mufti').value = fatwa.Writer;
+  fetch(`http://localhost:5000/api/fatwa/${fatwaId}`)
+    .then(response => response.json())
+    .then(data => {
+      const fatwa = Array.isArray(data) ? data[0] : (data.data || data);
 
-            // 3. Navigate to or show the form
-            // Example: if using a modal, show the modal,
-            // Or change hash, etc.
-            window.location.hash = 'add-fatwa'; // Example (if you use hashes)
-        });
+      document.getElementById('fatwa-id').value = fatwa.FatwaID;
+      document.getElementById('fatwa-title').value = fatwa.Title;
+      document.getElementById('fatwa-slug').value = fatwa.Slug;
+      document.getElementById('fatwa-keywords').value = fatwa.Tags;
+      document.getElementById('fatwa-meta-description').value = fatwa.Description;
+      document.getElementById('fatwa-question').value = fatwa.Question;
+      document.getElementById('fatwa-answer').value = fatwa.Answer;
+      document.getElementById('fatwa-mufti').value = fatwa.Writer;
+
+      // Set the topic dropdown selected value by TopicID
+      if (fatwa.TopicID) {
+        document.getElementById('fatwa-topic').value = fatwa.TopicID;
+      } else {
+        document.getElementById('fatwa-topic').value = '';
+      }
+
+      // Navigate to fatwa form page (adjust as per your routing)
+      window.location.hash = 'add-fatwa';
+    })
+    .catch(err => {
+      alert('فتویٰ لوڈ کرنے میں مسئلہ: ' + err.message);
+      console.error(err);
+    });
 }
+
 
 
 
