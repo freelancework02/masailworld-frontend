@@ -1,0 +1,79 @@
+@font-face {
+  font-family: "NaatFont";
+  src: url("https://res.cloudinary.com/awescreative/raw/upload/v1749150996/Awes/naatfont.ttf")
+    format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: "NaatFont", serif;
+  font-size: 80%;
+  overscroll-behavior: none;
+}
+
+.admin-page {
+  display: none;
+}
+
+.admin-page.active {
+  display: block;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #124559;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0b2935;
+}
+
+.sidebar-link.active {
+  background-color: #01161e;
+  /* rich_black */
+  border-right: 4px solid #eff6e0;
+  /* beige */
+}
+
+/* Responsive Table Styles */
+@media (max-width: 768px) {
+  .responsive-table thead {
+    display: none;
+  }
+
+  .responsive-table tr {
+    display: block;
+    margin-bottom: 1.5rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .responsive-table td {
+    display: block;
+    text-align: left;
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed #e5e7eb;
+  }
+
+  .responsive-table td:last-child {
+    border-bottom: none;
+  }
+
+  .responsive-table td::before {
+    content: attr(data-label);
+    float: right;
+    font-weight: bold;
+    margin-left: 1rem;
+  }
+}
