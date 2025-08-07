@@ -137,7 +137,7 @@ async function loadFatawa() {
 
     data.forEach((fatwa, index) => {
       const a = document.createElement("a");
-      a.href =  `../Pages/Articledetail.html?id=${fatwa.ArticleID}`; // or to your detail route;
+      a.href =  `/Pages/Articledetail.html?id=${fatwa.ArticleID}`; // or to your detail route;
       a.className =
         "nav-link ms-card-fatwa block bg-white p-4 border border-ash_gray rounded-lg hover:shadow-lg hover:border-midnight_green-200 transition-all duration-300";
 
