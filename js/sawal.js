@@ -69,7 +69,7 @@ async function renderLatestArticles() {
 
     articles.forEach((article, idx) => {
       const card = document.createElement("a");
-      card.href = `../Pages/Articledetail.html?id=${article.ArticleID}`; // or to your detail route
+      card.href = `/Pages/Articledetail.html?id=${article.ArticleID}`; // or to your detail route
       card.className =
         "nav-link ms-card-fatwa block bg-white p-4 border border-ash_gray rounded-lg hover:shadow-lg hover:border-midnight_green-200 transition-all duration-300";
 
@@ -118,7 +118,7 @@ async function loadFatawa() {
     );
     if (!response.ok) throw new Error("Network response was not ok");
     const data = await response.json();
-    console.log(data);
+
 
     // Since the API returns an array directly, no `data.data` needed
     if (!Array.isArray(data)) {
@@ -137,7 +137,7 @@ async function loadFatawa() {
 
     data.forEach((fatwa, index) => {
       const a = document.createElement("a");
-      a.href = `#fatwa-detail`;
+      a.href =  `/Pages/Articledetail.html?id=${fatwa.ArticleID}`; // or to your detail route;
       a.className =
         "nav-link ms-card-fatwa block bg-white p-4 border border-ash_gray rounded-lg hover:shadow-lg hover:border-midnight_green-200 transition-all duration-300";
 
@@ -210,3 +210,54 @@ async function loadFatawa() {
 }
 
 document.addEventListener("DOMContentLoaded", loadFatawa);
+
+
+
+
+//Display the Categroy 
+async function loadCategories() {
+  try {
+    const response = await fetch('https://masailworld.onrender.com/api/topic/paged?limit=12&offset=20');
+    if (!response.ok) throw new Error('Network response was not ok');
+    const categories = await response.json();
+    console.log("Display categories", response)
+
+    if (!Array.isArray(categories)) {
+      throw new Error('Expected an array of categories');
+    }
+
+    // Find the container div where categories should be placed
+    const container = document.querySelector('#qs-categories-home .grid');
+    if (!container) {
+      console.error('Category container not found');
+      return;
+    }
+
+    // Clear existing categories (if any)
+    container.innerHTML = '';
+
+    // For each category, create its card/link element
+    categories.forEach(cat => {
+      const a = document.createElement('a');
+      a.href = `#`;  // You can adjust this later, e.g. linking to category page by slug
+      a.className = 'ms-card-cat block bg-beige-600 p-6 rounded-xl shadow-md hover:bg-ash_gray hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center';
+
+      // Create icon element with dynamic IconClass
+      const icon = document.createElement('i');
+      icon.className = `${cat.IconClass} text-5xl text-midnight_green mb-4 inline-block`;
+      a.appendChild(icon);
+
+      // Category name
+      const h3 = document.createElement('h3');
+      h3.className = 'font-bold text-xl text-rich_black';
+      h3.textContent = cat.TopicName || 'نام دستیاب نہیں';
+      a.appendChild(h3);
+
+      container.appendChild(a);
+    });
+  } catch (error) {
+    console.error('Failed to load categories:', error);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadCategories);

@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="ur" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>فتوی تفصیل - مسائل ورلڈ</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
 
     <style>
         @font-face {
@@ -15,62 +17,125 @@
             font-weight: normal;
             font-style: normal;
         }
-
         body {
             font-family: 'NaatFont', serif;
             font-size: 80%;
+            direction: rtl;
+            text-align: right;
         }
-
         .hero-section {
-            background-image: linear-gradient(rgba(1, 22, 30, 0.7), rgba(1, 22, 30, 0.7)), url('https://img.freepik.com/free-photo/close-up-islamic-new-year-concept-with-misbaha_23-2148611691.jpg');
+            background-image:
+              linear-gradient(rgba(1, 22, 30, 0.7), rgba(1, 22, 30, 0.7)),
+              url('https://img.freepik.com/free-photo/close-up-islamic-new-year-concept-with-misbaha_23-2148611691.jpg');
             background-size: cover;
             background-position: center;
         }
-
         .page {
             display: none;
         }
-
         .page.active {
             display: block;
+        }
+        /* Specific styles for answer section */
+        .ms-fatwa-answer {
+            direction: rtl;
+            text-align: justify; /* Justify the paragraphs for neat look */
+            line-height: 1.7;
+        }
+        /* For any English text within Urdu, let browser handle natural LTR */
+        .ms-fatwa-answer p {
+            unicode-bidi: embed;
         }
     </style>
 
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'rich_black': { DEFAULT: '#01161e', 100: '#000406', 200: '#00090c', 300: '#010d12', 400: '#011118', 500: '#01161e', 600: '#04597b', 700: '#079cd8', 800: '#45c6f9', 900: '#a2e3fc' },
-                        'midnight_green': { DEFAULT: '#124559', 100: '#040e12', 200: '#071c24', 300: '#0b2935', 400: '#0f3747', 500: '#124559', 600: '#20799c', 700: '#36a9d6', 800: '#79c5e4', 900: '#bce2f1' },
-                        'air_force_blue': { DEFAULT: '#598392', 100: '#121a1d', 200: '#24343a', 300: '#354e57', 400: '#476874', 500: '#598392', 600: '#769dab', 700: '#99b6c0', 800: '#bbced5', 900: '#dde7ea' },
-                        'ash_gray': { DEFAULT: '#aec3b0', 100: '#1f2a20', 200: '#3e5441', 300: '#5e7f61', 400: '#83a386', 500: '#aec3b0', 600: '#bdcebf', 700: '#cedbcf', 800: '#dee7df', 900: '#eff3ef' },
-                        'beige': { DEFAULT: '#eff6e0', 100: '#384915', 200: '#71912a', 300: '#a4cc4e', 400: '#c9e197', 500: '#eff6e0', 600: '#f2f8e6', 700: '#f5f9ec', 800: '#f8fbf2', 900: '#fcfdf9' }
-                    }
-                }
-            }
-        }
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              rich_black: {
+                DEFAULT: '#01161e',
+                100: '#000406',
+                200: '#00090c',
+                300: '#010d12',
+                400: '#011118',
+                500: '#01161e',
+                600: '#04597b',
+                700: '#079cd8',
+                800: '#45c6f9',
+                900: '#a2e3fc',
+              },
+              midnight_green: {
+                DEFAULT: '#124559',
+                100: '#040e12',
+                200: '#071c24',
+                300: '#0b2935',
+                400: '#0f3747',
+                500: '#124559',
+                600: '#20799c',
+                700: '#36a9d6',
+                800: '#79c5e4',
+                900: '#bce2f1',
+              },
+              air_force_blue: {
+                DEFAULT: '#598392',
+                100: '#121a1d',
+                200: '#24343a',
+                300: '#354e57',
+                400: '#476874',
+                500: '#598392',
+                600: '#769dab',
+                700: '#99b6c0',
+                800: '#bbced5',
+                900: '#dde7ea',
+              },
+              ash_gray: {
+                DEFAULT: '#aec3b0',
+                100: '#1f2a20',
+                200: '#3e5441',
+                300: '#5e7f61',
+                400: '#83a386',
+                500: '#aec3b0',
+                600: '#bdcebf',
+                700: '#cedbcf',
+                800: '#dee7df',
+                900: '#eff3ef',
+              },
+              beige: {
+                DEFAULT: '#eff6e0',
+                100: '#384915',
+                200: '#71912a',
+                300: '#a4cc4e',
+                400: '#c9e197',
+                500: '#eff6e0',
+                600: '#f2f8e6',
+                700: '#f5f9ec',
+                800: '#f8fbf2',
+                900: '#fcfdf9',
+              },
+            },
+          },
+        },
+      };
     </script>
 </head>
-
 <body class="bg-beige-600 text-rich_black">
 
-      <header id="qs-header" class="as-header bg-beige/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
+    <!-- Header (Same as your original) -->
+    <header id="qs-header" class="as-header bg-beige/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
         <nav class="ms-nav container mx-auto px-6 py-4">
-            <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center" style="direction:ltr">
                 <div class="text-3xl font-bold text-midnight_green">
-                    <a href="#home" class="nav-link ms-logo">مسائل ورلڈ</a>
+                    <a href="#home" class="nav-link ms-logo" style="direction:rtl">مسائل ورلڈ</a>
                 </div>
-                
-                <div class="hidden md:flex items-center space-x-reverse space-x-8 ms-desktop-menu">
+                <div class="hidden md:flex items-center space-x-reverse space-x-8 ms-desktop-menu" style="direction:rtl;">
                     <a href="#home" class="nav-link ms-nav-link text-midnight_green hover:text-midnight_green-600 transition text-lg">صفحہ اول</a>
                     <a href="#fatawa" class="nav-link ms-nav-link text-midnight_green hover:text-midnight_green-600 transition text-lg">فتاویٰ</a>
                     <a href="#articles" class="nav-link ms-nav-link text-midnight_green hover:text-midnight_green-600 transition text-lg">مضامین</a>
                     <a href="#books" class="nav-link ms-nav-link text-midnight_green hover:text-midnight_green-600 transition text-lg">کتابیں</a>
                     <a href="#about" class="nav-link ms-nav-link text-midnight_green hover:text-midnight_green-600 transition text-lg">ہمارے بارے میں</a>
                 </div>
-
-                <div class="flex items-center">
+                <div class="flex items-center" style="direction:ltr">
                      <a href="#ask" class="nav-link ms-button hidden sm:block bg-midnight_green text-white py-2 px-5 rounded-full hover:bg-midnight_green-400 transition text-lg">سوال پوچھیں</a>
                     <div class="md:hidden ml-4">
                         <button id="mobile-menu-button" class="ms-mobile-btn text-midnight_green focus:outline-none">
@@ -79,8 +144,7 @@
                     </div>
                 </div>
             </div>
-            
-            <div id="mobile-menu" class="hidden md:hidden mt-4 bg-beige rounded-md shadow-lg ms-mobile-menu">
+            <div id="mobile-menu" class="hidden md:hidden mt-4 bg-beige rounded-md shadow-lg ms-mobile-menu" style="direction:rtl;">
                 <a href="#home" class="nav-link ms-nav-link block py-3 px-4 text-lg text-midnight_green hover:bg-ash_gray rounded-t-md">صفحہ اول</a>
                 <a href="#fatawa" class="nav-link ms-nav-link block py-3 px-4 text-lg text-midnight_green hover:bg-ash_gray">فتاویٰ</a>
                 <a href="#articles" class="nav-link ms-nav-link block py-3 px-4 text-lg text-midnight_green hover:bg-ash_gray">مضامین</a>
@@ -90,371 +154,204 @@
             </div>
         </nav>
     </header>
-     <div id="page-fatwa-detail" class="page active">
-            <main class="py-20 bg-beige-600">
-                <div class="container mx-auto px-6 max-w-5xl">
-                    <a href="#fatawa" class="nav-link text-midnight_green hover:text-midnight_green-600 font-bold text-lg mb-8 inline-block">&rarr; واپس تمام فتاویٰ پر</a>
-                    <div class="bg-white p-8 rounded-xl shadow-lg">
-                        <div class="pb-6">
-                            <h2 class="ms-fatwa-question-label text-xl font-bold text-midnight_green">سوال:</h2>
-                            <p class="ms-fatwa-question text-4xl font-semibold my-2 text-rich_black leading-normal">کیا نبی کریم ﷺ اپنی قبر انور میں حیات ہیں اور سلام سنتے ہیں؟</p>
-                        </div>
-                        <div class="py-6 border-t border-ash_gray">
-                            <h2 class="ms-fatwa-answer-label text-xl font-bold text-midnight_green">الجواب حامداً ومصلیاً:</h2>
-                            <div class="ms-fatwa-answer text-rich_black-600 text-xl mt-4 space-y-4 leading-relaxed">
-                                <p>اہلسنت والجماعت کا یہ متفقہ عقیدہ ہے کہ انبیاء کرام علیہم السلام اپنی قبروں میں اسی طرح حیات ہیں جیسے دنیا میں تھے۔ وہ نماز بھی پڑھتے ہیں اور ان پر پیش کیا جانے والا درود و سلام خود سنتے اور جواب دیتے ہیں۔ احادیثِ مبارکہ میں اس کی صراحت موجود ہے۔ امام جلال الدین سیوطی رحمۃ اللہ علیہ نے اس موضوع پر مستقل کتاب "انباء الاذکیاء بحیاۃ الانبیاء" تصنیف فرمائی ہے۔</p>
-                                <p>اعلیٰ حضرت امام احمد رضا خان فاضلِ بریلوی رحمۃ اللہ علیہ فرماتے ہیں کہ انبیاء کی حیات حقیقی، جسمانی اور دنیاوی ہے۔ یہ عقیدہ رکھنا ہر مسلمان کے لیے ضروری ہے۔</p>
-                                <p class="font-bold mt-4">واللہ اعلم بالصواب</p>
-                            </div>
-                        </div>
-                        <div class="pt-6 border-t border-ash_gray flex items-center justify-between">
-                            <div>
-                                <p class="font-bold text-midnight_green">جواب از: دارالافتاء، رضوی مرکز</p>
-                                <p class="text-air_force_blue">بریلی شریف، ہندوستان</p>
-                            </div>
-                            <div class="flex items-center space-x-6 space-x-reverse text-air_force_blue text-lg">
-                                <div class="flex items-center"><i class="bi bi-eye-fill ml-2"></i><span class="font-sans">3,152</span></div>
-                                <div class="flex items-center"><i class="bi bi-hand-thumbs-up-fill ml-2"></i><span class="font-sans">1,840</span></div>
-                                <a href="#" class="flex items-center hover:text-midnight_green"><i class="bi bi-share-fill ml-2"></i></a>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="mt-16">
-                        <h2 class="ms-section-title text-4xl font-bold text-center text-midnight_green mb-12">متعلقہ فتاویٰ</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <a href="#" class="ms-card-related block bg-white p-6 rounded-lg hover:shadow-lg border border-ash_gray hover:border-midnight_green-200 transition">
-                                <h3 class="ms-card-title text-2xl font-semibold text-rich_black">کیا اولیاء اللہ وفات کے بعد مدد کر سکتے ہیں؟</h3>
-                                <p class="ms-card-text text-rich_black-600 text-base mt-2 leading-relaxed">اہلسنت کا عقیدہ ہے کہ اولیاء اللہ اپنی قبور سے بھی فیض جاری رکھتے ہیں اور ان سے استعانت جائز ہے۔۔۔</p>
-                            </a>
-                             <a href="#" class="ms-card-related block bg-white p-6 rounded-lg hover:shadow-lg border border-ash_gray hover:border-midnight_green-200 transition">
-                                <h3 class="ms-card-title text-2xl font-semibold text-rich_black">علمِ غیبِ مصطفیٰ ﷺ کا کیا مطلب ہے؟</h3>
-                                <p class="ms-card-text text-rich_black-600 text-base mt-2 leading-relaxed">اللہ تعالیٰ نے اپنے حبیب ﷺ کو بے شمار علومِ غیبیہ عطا فرمائے ہیں، جو آپ کی شان اور معجزہ ہے۔۔۔</p>
-                            </a>
-                             <a href="#" class="ms-card-related block bg-white p-6 rounded-lg hover:shadow-lg border border-ash_gray hover:border-midnight_green-200 transition">
-                                <h3 class="ms-card-title text-2xl font-semibold text-rich_black">کیا "یا رسول اللہ" کہنا شرک ہے؟</h3>
-                                <p class="ms-card-text text-rich_black-600 text-base mt-2 leading-relaxed">حضور ﷺ کو دور و نزدیک سے پکارنا اور "یا رسول اللہ" کا نعرہ لگانا صحابہ کرام سے ثابت اور جائز ہے۔۔۔</p>
-                            </a>
-                             <a href="#" class="ms-card-related block bg-white p-6 rounded-lg hover:shadow-lg border border-ash_gray hover:border-midnight_green-200 transition">
-                                <h3 class="ms-card-title text-2xl font-semibold text-rich_black">فاتحہ اور ایصالِ ثواب کا طریقہ کیا ہے؟</h3>
-                                <p class="ms-card-text text-rich_black-600 text-base mt-2 leading-relaxed">اپنے مرحومین کے لیے قرآن خوانی، صدقہ و خیرات کرکے ثواب پہنچانا شرعاً ثابت شدہ عمل ہے۔۔۔</p>
-                            </a>
+    <!-- Page Content -->
+    <div id="page-fatwa-detail" class="page active">
+        <main class="py-20 bg-beige-600">
+            <div class="container mx-auto px-6 max-w-5xl">
+                <a href="#fatawa" class="nav-link text-midnight_green hover:text-midnight_green-600 font-bold text-lg mb-8 inline-block">&rarr; واپس تمام فتاویٰ پر</a>
+
+                <!-- Fatawa Detail -->
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <div class="pb-6">
+                        <h2 class="ms-fatwa-question-label text-xl font-bold text-midnight_green">سوال:</h2>
+                        <p
+                          class="ms-fatwa-question text-4xl font-semibold my-2 text-rich_black leading-normal"
+                        ></p>
+                    </div>
+                    <div class="py-6 border-t border-ash_gray">
+                        <h2 class="ms-fatwa-answer-label text-xl font-bold text-midnight_green">الجواب حامداً ومصلیاً:</h2>
+                        <div
+                          class="ms-fatwa-answer text-rich_black-600 text-xl mt-4 space-y-4 leading-relaxed"
+                        ></div>
+                    </div>
+                    <div class="pt-6 border-t border-ash_gray flex items-center justify-between">
+                        <div>
+                            <p class="font-bold text-midnight_green"></p>
+                            <p class="text-air_force_blue"></p>
+                        </div>
+                        <div
+                          class="flex items-center space-x-6 space-x-reverse text-air_force_blue text-lg"
+                        >
+                            <div class="flex items-center">
+                                <i class="bi bi-eye-fill ml-2"></i><span class="font-sans">0</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="bi bi-hand-thumbs-up-fill ml-2"></i><span class="font-sans">0</span>
+                            </div>
+                            <a href="#" class="flex items-center hover:text-midnight_green"
+                              ><i class="bi bi-share-fill ml-2"></i
+                            ></a>
                         </div>
                     </div>
                 </div>
-            </main>
-        </div>
 
-</body>
+                <!-- Related Fatawa -->
+                <div class="mt-16">
+                    <h2 class="ms-section-title text-4xl font-bold text-center text-midnight_green mb-12">
+                      متعلقہ فتاویٰ
+                    </h2>
+                    <div
+                      id="related-fatwas"
+                      class="grid grid-cols-1 md:grid-cols-2 gap-6"
+                    ></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
 <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-  const fatwaId = getFatwaIdFromUrl();
-  if (!fatwaId) {
-    // No ID in query string, maybe redirect back or show error
-    alert('No fatwa ID specified.');
-    return;
-  }
-
-  // Function to get fatwa ID from URL
-  function getFatwaIdFromUrl() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('id');
-  }
-
-  // Optional: a helper to safely set text with fallback
-  function setText(selector, text) {
-    const el = document.querySelector(selector);
-    if (el) el.textContent = text || '';
-  }
-
-  try {
-    // Try to fetch fatwa detail by ID if API supports it:
-    // Replace URL below if your API has a dedicated endpoint for single fatwa
-    const res = await fetch(`https://masailworld.onrender.com/api/article/${fatwaId}`);
-    if (!res.ok) {
-      // fallback: fetch all and search there
-      throw new Error('Not found via single fetch');
-    }
-    const fatwa = await res.json();
-
-    // Populate detail view
-    updateFatwaDetail(fatwa);
-
-  } catch (e) {
-    // Fallback: fetch list and find by id
-    try {
-      const listRes = await fetch('https://masailworld.onrender.com/api/article/paged?page=1&limit=50');
-      const data = await listRes.json();
-      if (!Array.isArray(data)) {
-        alert('Could not load fatwa data');
-        return;
-      }
-
-      const detailFatwa = data.find(f => String(f.ID || f.id || f._id) === fatwaId);
-      if (!detailFatwa) {
-        alert('Fatwa not found.');
-        return;
-      }
-
-      updateFatwaDetail(detailFatwa);
-    } catch (error) {
-      console.error(error);
-      alert('Error loading fatwa.');
-    }
-  }
-
-  // Update detail section function
-  function updateFatwaDetail(fatwa) {
-    // Assuming your fatwa object has Title, ArticleDescription (with HTML), views, likes, author etc.
-
-    setText('.ms-fatwa-question', fatwa.Title);
-
-    // For the answer/body text, this contains HTML, so insert safely
-    const answerDiv = document.querySelector('.ms-fatwa-answer');
-    if (answerDiv) {
-      // insert as HTML if you trust the data source (or sanitize before)
-      answerDiv.innerHTML = fatwa.ArticleDescription || fatwa.Description || '<p>No answer available.</p>';
-    }
-
-    setText('.font-bold.text-midnight_green', fatwa.Author || 'دارالافتاء، رضوی مرکز');
-    setText('.text-air_force_blue', fatwa.Location || 'بریلی شریف، ہندوستان');
-
-    // Update views if element exists
-    const viewsSpan = document.querySelector('.bi-eye-fill + span');
-    if (viewsSpan) viewsSpan.textContent = fatwa.views || '0';
-
-    // You might want to update likes similarly if available
-    const likesSpan = document.querySelector('.bi-hand-thumbs-up-fill + span');
-    if (likesSpan) likesSpan.textContent = fatwa.likes || '0';
-
-    // Share link href can be customized to current URL with fatwaId
-    const shareLink = document.querySelector('a .bi-share-fill')?.parentElement;
-    if (shareLink) {
-      shareLink.href = window.location.href;
-    }
-  }
-});
-
-
-async function loadRelatedFatawa(currentFatwaId) {
-  try {
-    // Fetch fatawa list, for example first 50 fatawa
-    const response = await fetch('https://masailworld.onrender.com/api/article/paged?page=1&limit=50');
-    if (!response.ok) throw new Error('Network response was not ok');
-    const fatawaList = await response.json();
-
-    if (!Array.isArray(fatawaList)) {
-      throw new Error('Expected an array of fatawa');
-    }
-
-    // Filter out the current fatwa itself, and pick 4 others as related
-    // You can customize this filter logic if you have categories or tags
-    const relatedFatawa = fatawaList.filter(f => String(f.ID || f.id || f._id) !== currentFatwaId).slice(0, 4);
-
-    // Container div where to append these cards
-    const relatedContainer = document.querySelector('.mt-16 > .grid');
-    if (!relatedContainer) {
-      console.warn('Related fatawa container not found');
-      return;
-    }
-    relatedContainer.innerHTML = ''; // Clear existing content
-
-    // Helper to strip HTML tags from description
-    function stripHtml(html) {
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = html;
-      return tempDiv.textContent || tempDiv.innerText || '';
-    }
-
-    relatedFatawa.forEach(fatwa => {
-      const a = document.createElement('a');
-      // Link to article detail page with proper id
-      const fatwaId = fatwa.ArticleID || fatwa.ArticleID || fatwa.ArticleID;
-      a.href = `../Pages/Article.html?id=${fatwaId}`;
-      a.className = 'ms-card-related block bg-white p-6 rounded-lg hover:shadow-lg border border-ash_gray hover:border-midnight_green-200 transition';
-
-      const h3 = document.createElement('h3');
-      h3.className = 'ms-card-title text-2xl font-semibold text-rich_black';
-      h3.textContent = fatwa.Title || 'No Title';
-
-      const p = document.createElement('p');
-      p.className = 'ms-card-text text-rich_black-600 text-base mt-2 leading-relaxed';
-      const rawDescription = fatwa.ArticleDescription || fatwa.Description || '';
-      const cleanDescription = stripHtml(rawDescription);
-      p.textContent = cleanDescription.length > 120 ? cleanDescription.substring(0, 117) + '...' : cleanDescription;
-
-      a.appendChild(h3);
-      a.appendChild(p);
-
-      relatedContainer.appendChild(a);
-    });
-  } catch (error) {
-    console.error('Error loading related fatawa:', error);
-  }
+/**
+ * Helper: gets query param from current URL
+ */
+function getQueryParam(name) {
+    const url = new URL(window.location.href);
+    return url.searchParams.get(name);
 }
 
-// Call this after loading the current fatwa detail
-// Pass the current fatwa's ID (string)
-document.addEventListener('DOMContentLoaded', () => {
-  // Extract current fatwa ID from URL query string
-  const params = new URLSearchParams(window.location.search);
-  const currentFatwaId = params.get('id');
+/**
+ * Helper: safe text content update
+ */
+function setText(selector, text) {
+    const el = document.querySelector(selector);
+    if (el) el.textContent = text || '';
+}
 
-  if (currentFatwaId) {
-    loadRelatedFatawa(currentFatwaId);
-  } else {
-    console.warn('No current fatwa ID in URL; cannot load related fatawa');
-  }
-});
+/**
+ * Fetch + Render Fatwa Detail
+ */
+async function loadFatwaDetailById(id) {
+    let fatwa = null;
+    try {
+        const res = await fetch(`https://masailworld.onrender.com/api/article/${id}`);
+        if (!res.ok) throw new Error('Not found via detail API');
+        fatwa = await res.json();
+    } catch {
+        // Fallback: fetch list and find fatwa in paged results
+        const res = await fetch('https://masailworld.onrender.com/api/article/paged?page=1&limit=100');
+        const fatawa = await res.json();
+        fatwa = (Array.isArray(fatawa) ? fatawa.find(f => String(f.ArticleID || f.ID || f.id || f._id) === String(id)) : null);
+    }
+    if (!fatwa) {
+        alert("یہ فتویٰ دستیاب نہیں ہے۔");
+        return;
+    }
 
-
-document.addEventListener('DOMContentLoaded', () => {
-  // Get fatwa id from URL query to load initial detail
-  const params = new URLSearchParams(window.location.search);
-  let currentFatwaId = params.get('id');
-
-  // Load initial fatwa detail
-  if (currentFatwaId) {
-    loadFatwaDetailById(currentFatwaId);
-  } else {
-    alert('No fatwa ID specified.');
-  }
-
-  // Load related fatawa links
-  function loadRelatedFatawa(currentId) {
-    fetch('https://masailworld.onrender.com/api/article/paged?page=1&limit=50')
-      .then(res => {
-        if (!res.ok) throw new Error('Network response not ok');
-        return res.json();
-      })
-      .then(fatawaList => {
-        if (!Array.isArray(fatawaList)) throw new Error('Expected array of fatawa');
-
-        const relatedFatawa = fatawaList.filter(f => String(f.ID || f.id || f._id) !== currentId).slice(0, 4);
-        const container = document.querySelector('.mt-16 > .grid');
-        if (!container) return;
-
-        container.innerHTML = ''; // clear existing
-
-        relatedFatawa.forEach(fatwa => {
-          const id = fatwa.ID || fatwa.id || fatwa._id;
-          const a = document.createElement('a');
-          a.href = 'javascript:void(0)'; // no navigation
-          a.className = 'ms-card-related block bg-white p-6 rounded-lg hover:shadow-lg border border-ash_gray hover:border-midnight_green-200 transition cursor-pointer';
-
-          const h3 = document.createElement('h3');
-          h3.className = 'ms-card-title text-2xl font-semibold text-rich_black';
-          h3.textContent = fatwa.Title || 'No Title';
-
-          const p = document.createElement('p');
-          p.className = 'ms-card-text text-rich_black-600 text-base mt-2 leading-relaxed';
-
-          // Strip HTML tags helper
-          const stripHtml = html => {
-            const div = document.createElement('div');
-            div.innerHTML = html;
-            return div.textContent || div.innerText || '';
-          };
-          const rawDesc = fatwa.ArticleDescription || fatwa.Description || '';
-          let cleanDesc = stripHtml(rawDesc);
-          if (cleanDesc.length > 120) {
-            cleanDesc = cleanDesc.substring(0, 117) + '...';
-          }
-          p.textContent = cleanDesc;
-
-          a.appendChild(h3);
-          a.appendChild(p);
-
-          // On click, load this fatwa detail dynamically
-          a.addEventListener('click', () => {
-            // Update currentFatwaId
-            currentFatwaId = id;
-            // Update URL without reloading (optional)
-            window.history.pushState(null, '', `?id=${id}`);
-            // Load fatwa detail by id
-            loadFatwaDetailById(id);
-            // Scroll to top of detail section for better UX
-            document.getElementById('page-fatwa-detail').scrollIntoView({ behavior: 'smooth' });
-          });
-
-          container.appendChild(a);
-        });
-      })
-      .catch(err => {
-        console.error('Error loading related fatawa:', err);
-      });
-  }
-
-  // Fetch and display fatwa detail by ID
-  function loadFatwaDetailById(id) {
-    fetch(`https://masailworld.onrender.com/api/article/${id}`)
-      .then(res => {
-        if (!res.ok) throw new Error('Fatwa not found via single fetch');
-        return res.json();
-      })
-      .then(fatwa => {
-        updateFatwaDetail(fatwa);
-        loadRelatedFatawa(id); // refresh related fatawa
-      })
-      .catch(() => {
-        // fallback: fetch paged list and find fatwa
-        fetch('https://masailworld.onrender.com/api/article/paged?page=1&limit=50')
-          .then(r => r.json())
-          .then(data => {
-            if (!Array.isArray(data)) throw new Error('Expected fatawa array');
-            const found = data.find(f => String(f.ID || f.id || f._id) === id);
-            if (!found) throw new Error('Fatwa not found in list');
-            updateFatwaDetail(found);
-            loadRelatedFatawa(id);
-          })
-          .catch(err => {
-            alert('Error loading fatwa: ' + err.message);
-            console.error(err);
-          });
-      });
-  }
-
-  // Helper to update detail section
-  function updateFatwaDetail(fatwa) {
-    const setText = (selector, text) => {
-      const el = document.querySelector(selector);
-      if (el) el.textContent = text || '';
-    };
-
+    // Set question/title
     setText('.ms-fatwa-question', fatwa.Title);
-
+    // Set answer/body (contains HTML)
     const answerDiv = document.querySelector('.ms-fatwa-answer');
     if (answerDiv) {
-      answerDiv.innerHTML = fatwa.ArticleDescription || fatwa.Description || '<p>No answer available.</p>';
+        // Insert HTML safely (assumes trusted API)
+        answerDiv.innerHTML = fatwa.ArticleDescription || fatwa.Description || '<p>جواب دستیاب نہیں۔</p>';
     }
-
+    // Author & Location
     setText('.font-bold.text-midnight_green', fatwa.Author || 'دارالافتاء، رضوی مرکز');
     setText('.text-air_force_blue', fatwa.Location || 'بریلی شریف، ہندوستان');
-
+    // Views & Likes
     const viewsSpan = document.querySelector('.bi-eye-fill + span');
     if (viewsSpan) viewsSpan.textContent = fatwa.views || '0';
-
     const likesSpan = document.querySelector('.bi-hand-thumbs-up-fill + span');
     if (likesSpan) likesSpan.textContent = fatwa.likes || '0';
-
+    // Share link
     const shareLink = document.querySelector('a .bi-share-fill')?.parentElement;
-    if (shareLink) {
-      shareLink.href = window.location.href;
-    }
-  }
+    if (shareLink) shareLink.href = window.location.href;
+}
 
-  // Optional: handle browser back/forward buttons to reload fatwa detail for the current URL
-  window.addEventListener('popstate', () => {
-    const paramsBack = new URLSearchParams(window.location.search);
-    const idBack = paramsBack.get('id');
-    if (idBack && idBack !== currentFatwaId) {
-      currentFatwaId = idBack;
-      loadFatwaDetailById(idBack);
+/**
+ * Fetch + Render Related Fatawa (maximum 4 excluding current)
+ */
+async function loadRelatedFatawa(currentFatwaId) {
+    try {
+        const res = await fetch('https://masailworld.onrender.com/api/article/paged?page=1&limit=50');
+        if (!res.ok) throw new Error('Network error');
+        const fatawaList = await res.json();
+
+        const relatedContainer = document.getElementById('related-fatwas');
+        if (!relatedContainer) return;
+
+        const relatedFatawa = fatawaList.filter(f => String(f.ArticleID || f.ID || f.id || f._id) !== String(currentFatwaId)).slice(0, 4);
+        relatedContainer.innerHTML = '';
+        if (!relatedFatawa.length) {
+            relatedContainer.innerHTML = "<div class='col-span-2 text-center text-gray-700'>متعلقہ فتاویٰ دستیاب نہیں۔</div>";
+            return;
+        }
+
+        function stripHtml(html) {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            return tempDiv.textContent || tempDiv.innerText || '';
+        }
+
+        relatedFatawa.forEach(fatwa => {
+            const fid = fatwa.ArticleID || fatwa.ID || fatwa.id || fatwa._id;
+            const a = document.createElement('a');
+            a.href = "javascript:void(0)";
+            a.className = 'ms-card-related block bg-white p-6 rounded-lg hover:shadow-lg border border-ash_gray hover:border-midnight_green-200 transition cursor-pointer';
+            a.style.direction = 'rtl';
+
+            const h3 = document.createElement('h3');
+            h3.className = 'ms-card-title text-2xl font-semibold text-rich_black';
+            h3.textContent = fatwa.Title || 'عنوان دستیاب نہیں';
+
+            const p = document.createElement('p');
+            p.className = 'ms-card-text text-rich_black-600 text-base mt-2 leading-relaxed';
+            let desc = stripHtml(fatwa.ArticleDescription || fatwa.Description || '');
+            if (desc.length > 120) desc = desc.substring(0, 117) + '...';
+            p.textContent = desc;
+
+            a.appendChild(h3);
+            a.appendChild(p);
+
+            a.onclick = () => {
+                window.history.pushState(null, '', `?id=${fid}`);
+                loadFatwaDetailById(fid);
+                loadRelatedFatawa(fid);
+                document.getElementById('page-fatwa-detail').scrollIntoView({ behavior: 'smooth' });
+            };
+
+            relatedContainer.appendChild(a);
+        });
+    } catch (err) {
+        const relatedContainer = document.getElementById('related-fatwas');
+        if (relatedContainer)
+            relatedContainer.innerHTML = "<div class='col-span-2 text-center text-gray-700'>متعلقہ فتاویٰ لوڈ نہیں ہو سکے۔</div>";
+        console.error(err);
     }
-  });
+}
+
+/**
+ * Initial page load
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    let fatwaId = getQueryParam('id');
+    if (!fatwaId) {
+        alert('فتویٰ کی شناخت دستیاب نہیں!');
+        return;
+    }
+    loadFatwaDetailById(fatwaId);
+    loadRelatedFatawa(fatwaId);
+
+    // Handle back/forward navigation
+    window.addEventListener('popstate', () => {
+        fatwaId = getQueryParam('id');
+        if (fatwaId) {
+            loadFatwaDetailById(fatwaId);
+            loadRelatedFatawa(fatwaId);
+        }
+    });
 });
-
-
-
 </script>
+
+</body>
 </html>
