@@ -69,7 +69,7 @@ async function renderLatestArticles() {
 
     articles.forEach((article, idx) => {
       const card = document.createElement("a");
-      card.href = `/Pages/Articledetail.html?id=${article.ArticleID}`; // or to your detail route
+      card.href = `/masailworld-frontend/Pages/Articledetail.html?id=${article.ArticleID}`; // or to your detail route
       card.className =
         "nav-link ms-card-fatwa block bg-white p-4 border border-ash_gray rounded-lg hover:shadow-lg hover:border-midnight_green-200 transition-all duration-300";
 
