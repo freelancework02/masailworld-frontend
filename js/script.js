@@ -30,7 +30,7 @@
                         const userIdParam = encodeURIComponent(data.userId || data.id || data.userID || data.userid); // adjust if your backend returns a different key
                         const usernameParam = encodeURIComponent(data.username);
 
-                        window.location.href = `./Pages/admin.html?userId=${userIdParam}&username=${usernameParam}`;
+                        window.location.href = `./Pages/Admin.html?userId=${userIdParam}&username=${usernameParam}`;
                     } else {
                         alert(data.error || "صارف نام یا پاس ورڈ غلط ہے۔");
                     }
