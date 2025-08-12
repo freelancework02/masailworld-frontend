@@ -1271,3 +1271,115 @@ document.addEventListener('DOMContentLoaded', () => {
     else showPage('manage-questions');
   }
 });
+
+
+
+
+
+// Display the Submission here 
+
+async function loadMuftiSubmissions() {
+    const tableBody = document.getElementById("ms-submissions-table-body");
+    tableBody.innerHTML = `<tr><td colspan="5" class="py-4 text-center">Loading...</td></tr>`;
+    try {
+        const res = await fetch("https://masailworld.onrender.com/questions/all");
+        if (!res.ok) throw new Error("Failed to fetch");
+        const data = await res.json();
+        console.log("Submission Data", data)
+
+        const submissions = Array.isArray(data) ? data : [data];
+
+        tableBody.innerHTML = submissions.map(sub => `
+            <tr class="border-b hover:bg-gray-50">
+                <td class="py-3 px-4">${sub.FullName || '-'}</td>
+                <td class="py-3 px-4">${sub.Topic || '-'}</td>
+                <td class="py-3 px-4">${sub.AnswerDate ? new Date(sub.AnswerDate).toLocaleDateString() : '-'}</td>
+                <td class="py-3 px-4">${sub.Approved ? 'Approved' : 'Pending'}</td>
+                <td class="py-3 px-4 space-x-2 space-x-reverse text-left">
+                    <button class="bg-green-500 text-white px-2 rounded" onclick="approveSubmission(${sub.ID})">Approve</button>
+                    <button class="bg-blue-500 text-white px-2 rounded" onclick="editSubmission(${sub.ID})">Edit</button>
+                    <button class="bg-red-500 text-white px-2 rounded" onclick="deleteSubmission(${sub.ID})">Delete</button>
+                </td>
+            </tr>
+        `).join('');
+    } catch (err) {
+        console.error(err);
+        tableBody.innerHTML = `<tr><td colspan="5" class="text-center text-red-500 py-4">Error</td></tr>`;
+    }
+}
+
+
+loadMuftiSubmissions()
+
+
+
+
+
+async function editSubmission(id) {
+    try {
+        const res = await fetch(`https://masailworld.onrender.com/questions/${id}`);
+        if (!res.ok) throw new Error("Record not found");
+        const sub = await res.json();
+
+        // Fill form fields
+        document.getElementById('ms-fatwa-id').value = sub.ID;
+        document.getElementById('ms-fatwa-title').value = sub.Question || '';
+        document.getElementById('ms-fatwa-slug').value = sub.Topic ? sub.Topic.toLowerCase().replace(/\s+/g, '-') : '';
+        document.getElementById('ms-fatwa-keywords').value = sub.Category || '';
+        document.getElementById('ms-fatwa-meta-description').value = sub.ReferenceAndDate || '';
+        document.getElementById('ms-fatwa-question').value = sub.Question || '';
+        document.getElementById('ms-fatwa-answer').value = sub.Answer || '';
+        document.getElementById('ms-fatwa-mufti').value = sub.FullName || '';
+
+        // Change heading to Edit
+        document.getElementById('ms-fatwa-form-title').innerText = 'فتویٰ میں ترمیم کریں';
+
+        // Navigate to form
+        window.location.hash = 'ms-page-add-fatwa';
+
+    } catch (err) {
+        console.error(err);
+        alert('Error loading submission for edit');
+    }
+}
+
+
+
+document.getElementById('ms-fatwa-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const id = document.getElementById('ms-fatwa-id').value;
+    const payload = {
+        Topic: document.getElementById('ms-fatwa-title').value,
+        Question: document.getElementById('ms-fatwa-question').value,
+        Answer: document.getElementById('ms-fatwa-answer').value,
+        DarulIftaName: document.getElementById('ms-fatwa-mufti').value,
+        ReferenceAndDate: document.getElementById('ms-fatwa-meta-description').value,
+        Category: document.getElementById('ms-fatwa-keywords').value,
+        Approved: 0,
+        IsDelete: 0
+    };
+
+    try {
+        const method = id ? 'PUT' : 'POST';
+        const url = id
+            ? `https://masailworld.onrender.com/questions/${id}`
+            : `https://masailworld.onrender.com/questions`;
+
+        const res = await fetch(url, {
+            method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) throw new Error('Failed saving data');
+
+        alert(id ? 'Updated successfully!' : 'Added successfully!');
+        window.location.hash = 'ms-page-manage-submissions';
+        loadMuftiSubmissions();
+
+    } catch (err) {
+        console.error(err);
+        alert('Error saving data');
+    }
+});
