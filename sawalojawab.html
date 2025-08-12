@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سوال و جواب فارم</title>
+    <meta name="description" content="نیا سوال و جواب داخل کرنے کے لیے فارم۔">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Custom Styles and Font -->
+    <style>
+        /* Custom Font for Urdu Text */
+        @font-face {
+            font-family: 'NaatFont';
+            src: url('https://res.cloudinary.com/awescreative/raw/upload/v1749150996/Awes/naatfont.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* Base Body Styles */
+        body {
+            font-family: 'NaatFont', 'Inter', sans-serif; /* Fallback font */
+            background-color: #f8fafc; /* A lighter gray for the background */
+        }
+    </style>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'rich_black': { DEFAULT: '#01161e' },
+                        'midnight_green': { DEFAULT: '#124559' },
+                        'air_force_blue': { DEFAULT: '#598392' },
+                        'ash_gray': { DEFAULT: '#aec3b0' },
+                        'beige': { DEFAULT: '#eff6e0' }
+                    },
+                    fontFamily: {
+                        'naat': ['NaatFont', 'serif'],
+                        'sans': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="text-rich_black bg-gray-50">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8">
+        <div class="max-w-4xl mx-auto bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+            
+            <!-- Form Header -->
+            <div class="text-center mb-8 pb-4 border-b border-gray-200">
+                <h1 class="text-3xl md:text-4xl font-bold text-midnight_green">نیا سوال و جواب شامل کریں</h1>
+                <p class="text-air_force_blue mt-2">براہ کرم تمام مطلوبہ خانے پُر کریں۔</p>
+            </div>
+
+            <!-- Form -->
+            <form id="sawal-jawab-form" class="space-y-8">
+
+                <!-- Section 1: Personal Information -->
+                <div class="p-6 border border-gray-200 rounded-xl">
+                    <h2 class="text-2xl font-bold text-midnight_green mb-6">ذاتی معلومات</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="full-name" class="block text-lg font-bold text-gray-700 mb-2">مکمل نام</label>
+                            <input type="text" id="full-name" name="fullName" class="w-full py-3 px-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-midnight_green focus:border-midnight_green text-rich_black text-lg transition" required>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-lg font-bold text-gray-700 mb-2">ایمیل</label>
+                            <input type="email" id="email" name="email" class="w-full py-3 px-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-midnight_green focus:border-midnight_green text-rich_black text-lg font-sans transition" style="direction: ltr;" required>
+                        </div>
+                        <div>
+                            <label for="whatsapp-number" class="block text-lg font-bold text-gray-700 mb-2">واٹس ایپ نمبر</label>
+                            <input type="tel" id="whatsapp-number" name="whatsappNumber" class="w-full py-3 px-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-midnight_green focus:border-midnight_green text-rich_black text-lg font-sans transition" style="direction: ltr;" required>
+                        </div>
+                        <div>
+                            <label for="country-city" class="block text-lg font-bold text-gray-700 mb-2">ملک، شہر</label>
+                            <input type="text" id="country-city" name="countryCity" class="w-full py-3 px-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-midnight_green focus:border-midnight_green text-rich_black text-lg transition" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Question and Answer -->
+                <div class="p-6 border border-gray-200 rounded-xl">
+                     <h2 class="text-2xl font-bold text-midnight_green mb-6">سوال و جواب</h2>
+                     <div class="space-y-6">
+                        <div>
+                            <label for="question" class="block text-lg font-bold text-gray-700 mb-2">سوال</label>
+                            <textarea id="question" name="question" rows="6" class="w-full py-3 px-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-midnight_green focus:border-midnight_green text-rich_black text-lg transition" required></textarea>
+                        </div>
+                        <div>
+                            <label for="answer" class="block text-lg font-bold text-gray-700 mb-2">جواب (مفتی کا جواب)</label>
+                            <textarea id="answer" name="answer" rows="10" class="w-full py-3 px-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-midnight_green focus:border-midnight_green text-rich_black text-lg transition" required></textarea>
+                        </div>
+                     </div>
+                </div>
+
+                <!-- Section 3: Reference and Date -->
+                 <div class="p-6 border border-gray-200 rounded-xl">
+                     <h2 class="text-2xl font-bold text-midnight_green mb-6">حوالہ اور تاریخ</h2>
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="reference" class="block text-lg font-bold text-gray-700 mb-2">تصحیح شدہ حوالہ، دار الافتاء کا نام</label>
+                            <input type="text" id="reference" name="reference" class="w-full py-3 px-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-midnight_green focus:border-midnight_green text-rich_black text-lg transition" required>
+                        </div>
+                        <div>
+                            <label for="date" class="block text-lg font-bold text-gray-700 mb-2">تاریخ</label>
+                            <input type="date" id="date" name="date" class="w-full py-3 px-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-midnight_green focus:border-midnight_green text-rich_black text-lg font-sans transition" required>
+                        </div>
+                     </div>
+                </div>
+
+                <!-- Section 4: Categorization -->
+                 <div class="p-6 border border-gray-200 rounded-xl">
+                     <h2 class="text-2xl font-bold text-midnight_green mb-6">درجہ بندی</h2>
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="category" class="block text-lg font-bold text-gray-700 mb-2">سوال کس کیٹیگری کا ہے؟</label>
+                            <select id="category" name="category" class="w-full py-3 px-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-midnight_green focus:border-midnight_green text-rich_black text-lg transition bg-white" required>
+                                <option value="" disabled selected>ایک کیٹیگری منتخب کریں</option>
+                                <option value="aqayed">عقائد</option>
+                                <option value="ibadat">عبادات</option>
+                                <option value="mamlaat">معاملات</option>
+                                <option value="aklaqiat">اخلاقیات</option>
+                                <option value="mutafariq">متفرق</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="topic" class="block text-lg font-bold text-gray-700 mb-2">سوال کا ٹاپک</label>
+                            <input type="text" id="topic" name="topic" class="w-full py-3 px-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-midnight_green focus:border-midnight_green text-rich_black text-lg transition" placeholder="مثال: نماز، روزہ، تجارت" required>
+                        </div>
+                     </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="pt-6 flex justify-end">
+                    <button type="submit" class="bg-midnight_green text-white py-3 px-10 rounded-lg text-lg font-semibold hover:bg-rich_black transition-all duration-300 shadow-md hover:shadow-lg flex items-center gap-2">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>محفوظ کریں</span>
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script src="./js/sawaljawab.js"></script>
+
+</body>
+</html>
