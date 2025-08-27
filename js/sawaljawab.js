@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
-            const res = await fetch('http://localhost:5000/questions/add', {
+            const res = await fetch('https://masailworld.onrender.com/questions/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
