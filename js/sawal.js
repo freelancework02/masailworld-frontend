@@ -576,3 +576,138 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+
+
+
+
+
+
+// Homepage Articles (3 latest with fixed images)
+// ============================
+async function renderHomeArticles() {
+  const apiUrl = "https://masailworld.onrender.com/api/article/paged?page=1&limit=3";
+
+  // Fixed image list
+  const fixedImages = [
+    "https://img.freepik.com/premium-photo/islam-holy-book-muslims-quran-is-placed-wooden-stand-light-candles_43780-2100.jpg",
+    "https://img.freepik.com/free-photo/prayer-beads-candle-near-religious-book_23-2147868974.jpg",
+    "https://img.freepik.com/free-photo/art-lanterns-middle-eastern-background_1203-4887.jpg"
+  ];
+
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) throw new Error("Network error");
+    const articles = await response.json();
+
+    const container = document.querySelector("#qs-articles-home .grid");
+    if (!container) return;
+
+    container.innerHTML = ""; // Clear old static content
+
+    articles.forEach((article, idx) => {
+      // Helper: strip HTML tags
+      const stripHtml = (html) => {
+        const div = document.createElement("div");
+        div.innerHTML = html;
+        return div.textContent || div.innerText || "";
+      };
+
+      const cleanText = stripHtml(article.ArticleDescription || article.Description || "");
+      const shortDesc = cleanText.length > 100 ? cleanText.substring(0, 100) + "..." : cleanText;
+
+      const card = document.createElement("div");
+      card.className =
+        "ms-card bg-white rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 border border-ash_gray/50";
+
+      card.innerHTML = `
+        <img src="${fixedImages[idx] || fixedImages[0]}"
+          alt="${article.Title}"
+          class="ms-card-image w-full h-64 object-cover">
+        <div class="p-8">
+          <h3 class="ms-card-title text-2xl font-bold mb-3 text-rich_black">${article.Title}</h3>
+          <p class="ms-card-text text-rich_black-600 mb-5 text-base leading-relaxed line-clamp-1">
+            ${shortDesc}
+          </p>
+          <a href="/masailworld-frontend/Pages/Articledetail.html?id=${article.ArticleID}"
+            class="nav-link text-midnight_green hover:text-midnight_green-600 font-bold text-lg">
+            مکمل مضمون پڑھیں
+          </a>
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
+  } catch (error) {
+    console.error("Failed to load homepage articles:", error);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", renderHomeArticles);
+
+
+
+
+// ============================
+// All Articles Page (clone cards with fixed images)
+// ============================
+async function renderAllArticles() {
+  const apiUrl = "https://masailworld.onrender.com/api/article/paged?page=1&limit=3";
+
+  // Fixed 3 images (cycled if more than 3 articles)
+  const fixedImages = [
+    "https://img.freepik.com/premium-photo/islam-holy-book-muslims-quran-is-placed-wooden-stand-light-candles_43780-2100.jpg",
+    "https://img.freepik.com/free-photo/prayer-beads-candle-near-religious-book_23-2147868974.jpg",
+    "https://img.freepik.com/free-photo/art-lanterns-middle-eastern-background_1203-4887.jpg"
+  ];
+
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) throw new Error("Network error");
+    const articles = await response.json();
+
+    const container = document.querySelector("#page-articles .grid");
+    if (!container) return;
+
+    container.innerHTML = ""; // Clear old static content
+
+    // Helper: strip HTML
+    const stripHtml = (html) => {
+      const div = document.createElement("div");
+      div.innerHTML = html;
+      return div.textContent || div.innerText || "";
+    };
+
+    articles.forEach((article, idx) => {
+      const cleanText = stripHtml(article.ArticleDescription || article.Description || "");
+      const shortDesc = cleanText.length > 150 ? cleanText.substring(0, 150) + "..." : cleanText;
+
+      const card = document.createElement("div");
+      card.className =
+        "ms-card bg-white rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 border border-ash_gray/50";
+
+      card.innerHTML = `
+        <img src="${fixedImages[idx % fixedImages.length]}"
+          alt="${article.Title}"
+          class="ms-card-image w-full h-64 object-cover">
+        <div class="p-8">
+          <h3 class="ms-card-title text-2xl font-bold mb-3 text-rich_black">${article.Title}</h3>
+          <p class="ms-card-text text-rich_black-600 mb-5 text-base leading-relaxed">
+            ${shortDesc}
+          </p>
+          <a href="/masailworld-frontend/Pages/Articledetail.html?id=${article.ArticleID}"
+            class="nav-link text-midnight_green hover:text-midnight_green-600 font-bold text-lg">
+            مکمل مضمون پڑھیں
+          </a>
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
+  } catch (error) {
+    console.error("Failed to load all articles:", error);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", renderAllArticles);
+
