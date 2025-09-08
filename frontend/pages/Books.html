@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>کتبِ اکابرینِ - مسائل ورلڈ</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <!-- Urdu Font -->
+    <style>
+        @font-face {
+            font-family: 'NaatFont';
+            src: url('https://res.cloudinary.com/awescreative/raw/upload/v1749150996/Awes/naatfont.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'NaatFont', serif;
+            font-size: 0.8rem;
+            background-color: #f6f7f2;
+            color: #0f3c5b;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+        }
+
+        .header-color {
+            background-color: rgba(238 238 220 / 0.9);
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #186690;
+        }
+
+        .book-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .book-card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #bcc6ca49;
+        }
+
+        .book-card:hover {
+            transform: translateY(-0.5rem);
+            box-shadow: 0 8px 17px rgb(0 0 0 / 0.15);
+        }
+
+        .book-icon {
+            font-size: 4rem;
+            color: #124559;
+            margin-bottom: 0.75rem;
+        }
+
+        .book-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            color: #072c40;
+        }
+
+        .download-button {
+            background-color: #124559;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            font-weight: 700;
+            border-radius: 9999px;
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-button:hover {
+            background-color: #186690;
+        }
+
+        .loader {
+            grid-column: 1 / -1;
+            text-align: center;
+            font-size: 1.25rem;
+            color: #124559;
+            padding: 2rem 0;
+        }
+
+        .no-books {
+            grid-column: 1 / -1;
+            text-align: center;
+            font-size: 1.25rem;
+            color: #4a5d68;
+            margin-top: 3rem;
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'rich_black': { DEFAULT: '#01161e', 100: '#000406', 200: '#00090c', 300: '#010d12', 400: '#011118', 500: '#01161e', 600: '#04597b', 700: '#079cd8', 800: '#45c6f9', 900: '#a2e3fc' },
+                        'midnight_green': { DEFAULT: '#124559', 100: '#040e12', 200: '#071c24', 300: '#0b2935', 400: '#0f3747', 500: '#124559', 600: '#20799c', 700: '#36a9d6', 800: '#79c5e4', 900: '#bce2f1' },
+                        'air_force_blue': { DEFAULT: '#598392', 100: '#121a1d', 200: '#24343a', 300: '#354e57', 400: '#476874', 500: '#598392', 600: '#769dab', 700: '#99b6c0', 800: '#bbced5', 900: '#dde7ea' },
+                        'ash_gray': { DEFAULT: '#aec3b0', 100: '#1f2a20', 200: '#3e5441', 300: '#5e7f61', 400: '#83a386', 500: '#aec3b0', 600: '#bdcebf', 700: '#cedbcf', 800: '#dee7df', 900: '#eff3ef' },
+                        'beige': { DEFAULT: '#eff6e0', 100: '#384915', 200: '#71912a', 300: '#a4cc4e', 400: '#c9e197', 500: '#eff6e0', 600: '#f2f8e6', 700: '#f5f9ec', 800: '#f8fbf2', 900: '#fcfdf9' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+    <!-- Navigation Header -->
+  <header id="qs-header" class="as-header bg-beige/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
+        <nav class="ms-nav container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-3xl font-bold text-midnight_green">
+                    <a href="#home" class="nav-link ms-logo">مسائل ورلڈ</a>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-reverse space-x-8 ms-desktop-menu">
+                    <a href="#home"
+                        class="nav-link ms-nav-link text-midnight_green hover:text-midnight_green-600 transition text-lg">صفحہ
+                        اول</a>
+                    <a href="#fatawa"
+                        class="nav-link ms-nav-link text-midnight_green hover:text-midnight_green-600 transition text-lg">فتاویٰ</a>
+                    <a href="#articles"
+                        class="nav-link ms-nav-link text-midnight_green hover:text-midnight_green-600 transition text-lg">مضامین</a>
+                    <a href="#books"
+                        class="nav-link ms-nav-link text-midnight_green hover:text-midnight_green-600 transition text-lg">کتابیں</a>
+                    <a href="#about"
+                        class="nav-link ms-nav-link text-midnight_green hover:text-midnight_green-600 transition text-lg">ہمارے
+                        بارے میں</a>
+                </div>
+
+                <div class="flex items-center">
+                    <a href="#ask"
+                        class="nav-link ms-button hidden sm:block bg-midnight_green text-white py-2 px-5 rounded-full hover:bg-midnight_green-400 transition text-lg">سوال
+                        پوچھیں</a>
+                    <div class="md:hidden ml-4">
+                        <button id="mobile-menu-button" class="ms-mobile-btn text-midnight_green focus:outline-none">
+                            <i class="bi bi-list text-4xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="mobile-menu" class="hidden md:hidden mt-4 bg-beige rounded-md shadow-lg ms-mobile-menu">
+                <a href="#home"
+                    class="nav-link ms-nav-link block py-3 px-4 text-lg text-midnight_green hover:bg-ash_gray rounded-t-md">صفحہ
+                    اول</a>
+                <a href="#fatawa"
+                    class="nav-link ms-nav-link block py-3 px-4 text-lg text-midnight_green hover:bg-ash_gray">فتاویٰ</a>
+                <a href="#articles"
+                    class="nav-link ms-nav-link block py-3 px-4 text-lg text-midnight_green hover:bg-ash_gray">مضامین</a>
+                <a href="#books"
+                    class="nav-link ms-nav-link block py-3 px-4 text-lg text-midnight_green hover:bg-ash_gray">کتابیں</a>
+                <a href="#about"
+                    class="nav-link ms-nav-link block py-3 px-4 text-lg text-midnight_green hover:bg-ash_gray">ہمارے
+                    بارے میں</a>
+                <a href="#ask"
+                    class="nav-link ms-button block mt-4 text-center bg-black text-white py-3 px-4 rounded-full hover:bg-midnight_green-400 transition text-lg">سوال
+                    پوچھیں</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Main Title -->
+    <h1 class="text-center text-3xl font-bold text-midnight_green mt-8 mb-6">
+        کتبِ اکابرینِ
+    </h1>
+
+    <!-- Books Container -->
+    <main class="container mx-auto px-4">
+        <div id="books-container" class="book-container">
+            <!-- Books will be loaded here -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+     <footer id="qs-footer" class="as-footer bg-rich_black text-beige pt-16">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+                <div class="col-span-1 md:col-span-2">
+                    <h3 class="text-3xl font-bold mb-4">مسائل ورلڈ</h3>
+                    <p class="text-air_force_blue-700 text-lg leading-relaxed">ایک آن لائن پلیٹ فارم جو قرآن و سنت کی
+                        روشنی میں آپ کے مسائل کا حل پیش کرتا ہے۔ ہمارا مقصد مستند علمی تحقیق اور اہلسنت والجماعت کے
+                        مطابق رہنمائی کو عام کرنا ہے۔</p>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-semibold mb-4">فوری لنکس</h3>
+                    <ul class="space-y-3 text-lg">
+                        <li><a href="#fatawa"
+                                class="nav-link text-air_force_blue-700 hover:text-beige transition">فتاویٰ</a></li>
+                        <li><a href="#articles"
+                                class="nav-link text-air_force_blue-700 hover:text-beige transition">مضامین</a></li>
+                        <li><a href="#ask" class="nav-link text-air_force_blue-700 hover:text-beige transition">سوال
+                                پوچھیں</a></li>
+                        <li><a href="#about" class="nav-link text-air_force_blue-700 hover:text-beige transition">ہمارے
+                                بارے میں</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-semibold mb-4">ہمیں فالو کریں</h3>
+                    <div class="flex space-x-5 space-x-reverse text-3xl">
+                        <a href="#" class="text-air_force_blue-700 hover:text-beige transition"><i
+                                class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-air_force_blue-700 hover:text-beige transition"><i
+                                class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="text-air_force_blue-700 hover:text-beige transition"><i
+                                class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-midnight_green-400 pt-8 pb-8 text-center text-air_force_blue">
+                <p class="text-lg">&copy; 2025 . All rights reserved. Design by www.AlQalamArts.com</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        const mobileMenuBtn = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        async function loadBooks() {
+            const container = document.getElementById('books-container');
+            container.innerHTML = '<div class="loader">کتب لوڈ ہو رہی ہیں، براہ کرم انتظار کریں...</div>';
+
+            try {
+                const response = await fetch('https://masailworld.onrender.com/api/book');
+                if (!response.ok) throw new Error('نیٹ ورک ایرر');
+                const books = await response.json();
+                if (!Array.isArray(books) || books.length === 0) {
+                    container.innerHTML = '<div class="no-books">کوئی کتاب دستیاب نہیں</div>';
+                    return;
+                }
+                container.innerHTML = '';
+                books.forEach(book => {
+                    const card = document.createElement('div');
+                    card.className = 'book-card';
+                    const downloadUrl = `https://masailworld.onrender.com/api/book/pdf/${book.BookID}`;
+                    card.innerHTML = `
+                        <i class="bi bi-book-fill book-icon"></i>
+                        <div class="book-title">${book.BookName}</div>
+                        <a href="${downloadUrl}" class="download-button" target="_blank" rel="noopener noreferrer">
+                            ڈاؤن لوڈ کریں
+                        </a>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                container.innerHTML = '<div class="no-books">کتب لوڈ کرنے میں مسئلہ پیش آیا</div>';
+                console.error('Failed to load books:', err);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadBooks();
+        });
+    </script>
+
+</body>
+</html>

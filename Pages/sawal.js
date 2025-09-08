@@ -1,7 +1,7 @@
 // Call this after DOM is ready (e.g., in <script> at end of body or window.onload)
 
 async function renderLatestArticles() {
-  const apiUrl = 'https://masailworld.onrender.com/api/article/paged?page=1&limit=3';
+  const apiUrl = 'http://localhost:5000/api/fatwa/paginated/list?limit=0&offset=3';
   try {
     const response = await fetch(apiUrl);
     if (!response.ok) throw new Error('Network response was not ok');

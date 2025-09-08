@@ -328,11 +328,12 @@ document.addEventListener("DOMContentLoaded", () => {
 // ============================
 async function renderLatestArticles() {
   const apiUrl =
-    "https://masailworld.onrender.com/api/article/paged?page=1&limit=3";
+    "https://masailworld.onrender.com/api/fatwa/paginated/list?limit=3&offset=2789";
   try {
     const response = await fetch(apiUrl);
     if (!response.ok) throw new Error("Network response was not ok");
-    const articles = await response.json();
+     const result = await response.json();
+    const articles = result.data || []; // 👈 grab actual array
 
     const container = document.querySelector("#qs-fatawa-home .space-y-6");
     if (!container) return;
@@ -341,7 +342,7 @@ async function renderLatestArticles() {
 
     articles.forEach((article, idx) => {
       const card = document.createElement("a");
-      card.href = `./pages/Articledetail.html?id=${article.ArticleID}`;
+      card.href = `./pages/Articledetail.html?id=${article.FatwaID}`;
       card.className =
         "nav-link ms-card-fatwa block bg-white p-4 border border-ash_gray rounded-lg hover:shadow-lg hover:border-midnight_green-200 transition-all duration-300";
 
@@ -360,7 +361,7 @@ async function renderLatestArticles() {
             <div class="flex justify-between items-center mt-4">
               <span class="text-midnight_green group-hover:text-midnight_green-600 font-bold text-lg">مکمل جواب پڑھیں &larr;</span>
               <div class="flex items-center space-x-4 space-x-reverse text-air_force_blue">
-                <div class="flex items-center"><i class="bi bi-eye-fill ml-1"></i><span class="text-sm font-sans">${article.VIEW}</span></div>
+                <div class="flex items-center"><i class="bi bi-eye-fill ml-1"></i><span class="text-sm font-sans">${article.Views}</span></div>
                 <span class="hover:text-midnight_green"><i class="bi bi-share-fill"></i></span>
               </div>
             </div>
@@ -390,10 +391,11 @@ function stripHtml(html) {
 async function loadFatawa() {
   try {
     const response = await fetch(
-      "https://masailworld.onrender.com/api/article/paged?page=1&limit=60"
+      "https://masailworld.onrender.com/api/fatwa/paginated/list?limit=130&offset=0"
     );
     if (!response.ok) throw new Error("Network response was not ok");
-    const data = await response.json();
+    const result = await response.json();
+    const data = result.data || []; // 👈 grab actual array
 
     if (!Array.isArray(data)) {
       throw new Error("Expected an array of fatawa");
@@ -415,7 +417,7 @@ async function loadFatawa() {
 
 function createFatwaCard(fatwa, index) {
   const a = document.createElement("a");
-  a.href = `./pages/Articledetail.html?id=${fatwa.ArticleID}`;
+  a.href = `./pages/Articledetail.html?id=${fatwa.FatwaID}`;
   a.className =
     "nav-link ms-card-fatwa block bg-white p-4 border border-ash_gray rounded-lg hover:shadow-lg hover:border-midnight_green-200 transition-all duration-300";
 
@@ -457,7 +459,7 @@ function createFatwaCard(fatwa, index) {
   const viewsDiv = document.createElement("div");
   viewsDiv.className = "flex items-center";
   viewsDiv.innerHTML = `<i class="bi bi-eye-fill ml-1"></i><span class="text-sm font-sans">${
-    fatwa.VIEW
+    fatwa.Views
   }</span>`;
 
   const shareSpan = document.createElement("span");
@@ -558,7 +560,7 @@ document.addEventListener("DOMContentLoaded", () => {
         option.textContent = fatwa.Title;
 
         option.addEventListener("click", () => {
-          window.location.href = `./pages/Articledetail.html?id=${fatwa.ArticleID}`;
+          window.location.href = `./pages/Articledetail.html?id=${fatwa.FatwaID}`;
         });
 
         searchDropdown.appendChild(option);
@@ -587,7 +589,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // Homepage Articles (3 latest with fixed images)
 // ============================
 async function renderHomeArticles() {
-  const apiUrl = "https://masailworld.onrender.com/api/article/paged?page=1&limit=3";
+  const apiUrl = "https://masailworld.onrender.com/api/fatwa/paginated/list?limit=3&offset=0";
 
   // Fixed image list
   const fixedImages = [
@@ -599,7 +601,8 @@ async function renderHomeArticles() {
   try {
     const response = await fetch(apiUrl);
     if (!response.ok) throw new Error("Network error");
-    const articles = await response.json();
+     const result = await response.json();
+    const articles = result.data || []; // 👈 grab actual array
 
     const container = document.querySelector("#qs-articles-home .grid");
     if (!container) return;
@@ -614,7 +617,7 @@ async function renderHomeArticles() {
         return div.textContent || div.innerText || "";
       };
 
-      const cleanText = stripHtml(article.ArticleDescription || article.Description || "");
+      const cleanText = stripHtml(article.Description || article.Description || "");
       const shortDesc = cleanText.length > 100 ? cleanText.substring(0, 100) + "..." : cleanText;
 
       const card = document.createElement("div");
@@ -630,7 +633,7 @@ async function renderHomeArticles() {
           <p class="ms-card-text text-rich_black-600 mb-5 text-base leading-relaxed line-clamp-1">
             ${shortDesc}
           </p>
-          <a href="./pages/Articledetail.html?id=${article.ArticleID}"
+          <a href="./pages/Articledetail.html?id=${article.FatwaID}"
             class="nav-link text-midnight_green hover:text-midnight_green-600 font-bold text-lg">
             مکمل مضمون پڑھیں
           </a>
@@ -653,7 +656,7 @@ document.addEventListener("DOMContentLoaded", renderHomeArticles);
 // All Articles Page (clone cards with fixed images)
 // ============================
 async function renderAllArticles() {
-  const apiUrl = "https://masailworld.onrender.com/api/article/paged?page=1&limit=3";
+  const apiUrl = "https://masailworld.onrender.com/api/fatwa/paginated/list?limit=3&offset=1";
 
   // Fixed 3 images (cycled if more than 3 articles)
   const fixedImages = [
@@ -665,7 +668,8 @@ async function renderAllArticles() {
   try {
     const response = await fetch(apiUrl);
     if (!response.ok) throw new Error("Network error");
-    const articles = await response.json();
+     const result = await response.json();
+    const articles = result.data || []; // 👈 grab actual array
 
     const container = document.querySelector("#page-articles .grid");
     if (!container) return;
@@ -696,7 +700,7 @@ async function renderAllArticles() {
           <p class="ms-card-text text-rich_black-600 mb-5 text-base leading-relaxed">
             ${shortDesc}
           </p>
-          <a href="./pages/Articledetail.html?id=${article.ArticleID}"
+          <a href="./pages/Articledetail.html?id=${article.FatwaID }"
             class="nav-link text-midnight_green hover:text-midnight_green-600 font-bold text-lg">
             مکمل مضمون پڑھیں
           </a>
@@ -712,3 +716,61 @@ async function renderAllArticles() {
 
 document.addEventListener("DOMContentLoaded", renderAllArticles);
 
+
+
+
+//Books Downloaded Section is here 
+async function loadBooks() {
+    const container = document.getElementById('books-container');
+    if (!container) return;
+
+    // Show loader while fetching
+    container.innerHTML = '<div class="loader col-span-full"></div>';
+
+    try {
+        const response = await fetch('https://masailworld.onrender.com/api/book/paginated?limit=6');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const result = await response.json();
+
+        // --- THIS IS THE FIX ---
+        // The API returns an array directly, not an object with a .data property.
+        const books = result; 
+
+        // Clear the loader
+        container.innerHTML = '';
+
+        // This check will now work correctly
+        if (!Array.isArray(books) || books.length === 0) {
+             container.innerHTML = '<p class="col-span-full text-center text-xl text-midnight_green">کوئی کتاب دستیاب نہیں ہے۔</p>';
+             return;
+        }
+
+        // Create and append a card for each book
+        books.forEach(book => {
+            const bookCard = document.createElement('div');
+            bookCard.className = 'ms-card bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-ash_gray/50';
+            const downloadUrl = `https://masailworld.onrender.com/api/book/pdf/${book.BookID}`;
+
+            bookCard.innerHTML = `
+                <i class="bi bi-book-fill text-6xl text-midnight_green mx-auto"></i>
+                <h3 class="ms-card-title text-xl font-bold mt-4 mb-2 text-rich_black">${book.BookName}</h3>
+                <a href="${downloadUrl}" 
+                   class="ms-button w-full inline-block bg-midnight_green text-white py-2 px-4 rounded-full hover:bg-midnight_green-400 transition"
+                   target="_blank" rel="noopener noreferrer">
+                   ڈاؤن لوڈ
+                </a>
+            `;
+            container.appendChild(bookCard);
+        });
+    } catch (error) {
+        console.error('Failed to load books:', error);
+        container.innerHTML = '<p class="col-span-full text-center text-xl text-red-600">کتابیں لوڈ کرنے میں ناکام رہے۔ براہ کرم بعد میں دوبارہ کوشش کریں۔</p>';
+    }
+}
+
+
+// --- THIS IS THE FIX ---
+// Wait for the HTML document to be fully loaded before running the function
+document.addEventListener('DOMContentLoaded', loadBooks);

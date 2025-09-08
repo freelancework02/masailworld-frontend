@@ -9,7 +9,6 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
-
     <style>
         @font-face {
             font-family: 'NaatFont';
@@ -47,7 +46,6 @@
             unicode-bidi: embed;
         }
     </style>
-
     <script>
       tailwind.config = {
         theme: {
@@ -120,7 +118,6 @@
     </script>
 </head>
 <body class="bg-beige-600 text-rich_black">
-
     <!-- Header (Same as your original) -->
     <header id="qs-header" class="as-header bg-beige/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
         <nav class="ms-nav container mx-auto px-6 py-4">
@@ -154,13 +151,11 @@
             </div>
         </nav>
     </header>
-
     <!-- Page Content -->
     <div id="page-fatwa-detail" class="page active">
         <main class="py-20 bg-beige-600">
             <div class="container mx-auto px-6 max-w-5xl">
                 <a href="#fatawa" class="nav-link text-midnight_green hover:text-midnight_green-600 font-bold text-lg mb-8 inline-block">&rarr; واپس تمام فتاویٰ پر</a>
-
                 <!-- Fatawa Detail -->
                 <div class="bg-white p-8 rounded-xl shadow-lg">
                     <div class="pb-6">
@@ -195,7 +190,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Related Fatawa -->
                 <div class="mt-16">
                     <h2 class="ms-section-title text-4xl font-bold text-center text-midnight_green mb-12">
@@ -209,7 +203,6 @@
             </div>
         </main>
     </div>
-
 <script>
 /**
  * Helper: gets query param from current URL
@@ -218,7 +211,6 @@ function getQueryParam(name) {
     const url = new URL(window.location.href);
     return url.searchParams.get(name);
 }
-
 /**
  * Helper: safe text content update
  */
@@ -233,39 +225,37 @@ function setText(selector, text) {
 async function loadFatwaDetailById(id) {
     let fatwa = null;
     try {
-        const res = await fetch(`https://masailworld.onrender.com/api/article/${id}`);
+        const res = await fetch(`https://masailworld.onrender.com/api/fatwa/${id}`);
         if (!res.ok) throw new Error('Not found via detail API');
-        fatwa = await res.json();
+        const result = await res.json();
+        fatwa = result.data; // use .data
     } catch {
         // Fallback: fetch list and find fatwa in paged results
-        const res = await fetch('https://masailworld.onrender.com/api/article/paged?page=1&limit=100');
-        const fatawa = await res.json();
-        fatwa = (Array.isArray(fatawa) ? fatawa.find(f => String(f.ArticleID || f.ID || f.id || f._id) === String(id)) : null);
+        const res = await fetch('https://masailworld.onrender.com/api/fatwa/paginated/list?limit=100&offset=0');
+        const results = await res.json();
+        const fatawa = results.data || [];
+        fatwa = (Array.isArray(fatawa) ? fatawa.find(f => String(f.FatwaID) === String(id)) : null);
     }
     if (!fatwa) {
         alert("یہ فتویٰ دستیاب نہیں ہے۔");
         return;
     }
-
     // Set question/title
     setText('.ms-fatwa-question', fatwa.Title);
     // Set answer/body (contains HTML)
     const answerDiv = document.querySelector('.ms-fatwa-answer');
     if (answerDiv) {
-        // Insert HTML safely (assumes trusted API)
-        answerDiv.innerHTML = fatwa.ArticleDescription || fatwa.Description || '<p>جواب دستیاب نہیں۔</p>';
+        answerDiv.innerHTML = fatwa.Answer || fatwa.Description || '<p>جواب دستیاب نہیں۔</p>';
     }
     // Author & Location
-    setText('.font-bold.text-midnight_green', fatwa.Author || 'دارالافتاء، رضوی مرکز');
-    setText('.text-air_force_blue', fatwa.Location || 'بریلی شریف، ہندوستان');
+    setText('.font-bold.text-midnight_green', fatwa.Writer || 'دارالافتاء، رضوی مرکز');
+    // setText('.text-air_force_blue', fatwa.Location || 'بریلی شریف، ہندوستان');
     // Views & Likes
     const viewsSpan = document.querySelector('.bi-eye-fill + span');
-    if (viewsSpan) viewsSpan.textContent = fatwa.VIEW || '0';
+    if (viewsSpan) viewsSpan.textContent = fatwa.Views || '0';
     const likesSpan = document.querySelector('.bi-hand-thumbs-up-fill + span');
-    if (likesSpan) likesSpan.textContent = fatwa.likes || '0';
-    // Share link
-    const shareLink = document.querySelector('a .bi-share-fill')?.parentElement;
-    if (shareLink) shareLink.href = window.location.href;
+    if (likesSpan) likesSpan.textContent = fatwa.Likes || '0';
+    // The share button is handled by a separate event listener now.
 }
 
 /**
@@ -273,53 +263,45 @@ async function loadFatwaDetailById(id) {
  */
 async function loadRelatedFatawa(currentFatwaId) {
     try {
-        const res = await fetch('https://masailworld.onrender.com/api/article/paged?page=1&limit=50');
+        const res = await fetch('https://masailworld.onrender.com/api/fatwa/paginated/list?limit=50&offset=1');
         if (!res.ok) throw new Error('Network error');
-        const fatawaList = await res.json();
-
+        const results = await res.json();
+        const fatawaList = results.data || [];
         const relatedContainer = document.getElementById('related-fatwas');
         if (!relatedContainer) return;
-
-        const relatedFatawa = fatawaList.filter(f => String(f.ArticleID || f.ID || f.id || f._id) !== String(currentFatwaId)).slice(0, 4);
+        const relatedFatawa = fatawaList.filter(f => String(f.FatwaID || f.ID || f.id || f._id) !== String(currentFatwaId)).slice(0, 4);
         relatedContainer.innerHTML = '';
         if (!relatedFatawa.length) {
             relatedContainer.innerHTML = "<div class='col-span-2 text-center text-gray-700'>متعلقہ فتاویٰ دستیاب نہیں۔</div>";
             return;
         }
-
         function stripHtml(html) {
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = html;
             return tempDiv.textContent || tempDiv.innerText || '';
         }
-
         relatedFatawa.forEach(fatwa => {
-            const fid = fatwa.ArticleID || fatwa.ID || fatwa.id || fatwa._id;
+            const fid = fatwa.FatwaID || fatwa.ID || fatwa.id || fatwa._id;
             const a = document.createElement('a');
             a.href = "javascript:void(0)";
             a.className = 'ms-card-related block bg-white p-6 rounded-lg hover:shadow-lg border border-ash_gray hover:border-midnight_green-200 transition cursor-pointer';
             a.style.direction = 'rtl';
-
             const h3 = document.createElement('h3');
             h3.className = 'ms-card-title text-2xl font-semibold text-rich_black';
             h3.textContent = fatwa.Title || 'عنوان دستیاب نہیں';
-
             const p = document.createElement('p');
             p.className = 'ms-card-text text-rich_black-600 text-base mt-2 leading-relaxed';
             let desc = stripHtml(fatwa.ArticleDescription || fatwa.Description || '');
             if (desc.length > 120) desc = desc.substring(0, 117) + '...';
             p.textContent = desc;
-
             a.appendChild(h3);
             a.appendChild(p);
-
             a.onclick = () => {
                 window.history.pushState(null, '', `?id=${fid}`);
                 loadFatwaDetailById(fid);
                 loadRelatedFatawa(fid);
                 document.getElementById('page-fatwa-detail').scrollIntoView({ behavior: 'smooth' });
             };
-
             relatedContainer.appendChild(a);
         });
     } catch (err) {
@@ -341,6 +323,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     loadFatwaDetailById(fatwaId);
     loadRelatedFatawa(fatwaId);
+    
+    // --- NEW: Share button functionality ---
+    const shareButton = document.querySelector('a .bi-share-fill')?.parentElement;
+    if (shareButton) {
+        shareButton.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent default link behavior
+            const urlToCopy = window.location.href;
+            
+            // Use the modern Navigator Clipboard API
+            navigator.clipboard.writeText(urlToCopy).then(() => {
+                alert('فتویٰ کا لنک کاپی ہو گیا ہے۔'); // Alert in Urdu: "The Fatwa link has been copied."
+            }).catch(err => {
+                console.error('Failed to copy URL: ', err);
+                alert('لنک کاپی نہیں ہو سکا۔'); // Alert in Urdu: "Could not copy the link."
+            });
+        });
+    }
 
     // Handle back/forward navigation
     window.addEventListener('popstate', () => {
@@ -352,6 +351,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
-
 </body>
 </html>

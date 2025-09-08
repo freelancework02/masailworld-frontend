@@ -71,8 +71,8 @@
                         class="nav-link ms-nav-link text-midnight_green hover:text-midnight_green-600 transition text-lg">فتاویٰ</a>
                     <a href="#articles"
                         class="nav-link ms-nav-link text-midnight_green hover:text-midnight_green-600 transition text-lg">مضامین</a>
-                    <a href="#books"
-                        class="nav-link ms-nav-link text-midnight_green hover:text-midnight_green-600 transition text-lg">کتابیں</a>
+                    <a href="./pages/Books.html"
+                        class=" ms-nav-link text-midnight_green hover:text-midnight_green-600 transition text-lg">کتابیں</a>
                     <a href="#about"
                         class="nav-link ms-nav-link text-midnight_green hover:text-midnight_green-600 transition text-lg">ہمارے
                         بارے میں</a>
@@ -297,7 +297,7 @@
                     <div class="container mx-auto px-6">
                         <h2 class="ms-section-title text-4xl font-bold text-center text-midnight_green mb-12">کتبِ
                             اکابرینِ اہلسنت</h2>
-                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-center">
+                        <div id="books-container" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-center">
                             <div
                                 class="ms-card bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-ash_gray/50">
                                 <i class="bi bi-book-fill text-6xl text-midnight_green mx-auto"></i>
@@ -728,12 +728,12 @@
             </main>
         </div>
 
-        <div id="page-books" class="page">
+        <!-- <div id="page-books" class="page">
             <main class="py-20 bg-beige-600">
                 <div class="container mx-auto px-6">
                     <h1 class="ms-page-title text-5xl font-bold text-center text-midnight_green mb-12">کتبِ اکابرینِ
                         اہلسنت</h1>
-                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-center">
+                    <div id="books-container" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-center">
                         <div
                             class="ms-card bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-ash_gray/50">
                             <i class="bi bi-book-fill text-6xl text-midnight_green mx-auto"></i>
@@ -785,7 +785,25 @@
                     </div>
                 </div>
             </main>
+        </div> -->
+
+        <!-- This is the corrected Books Page section -->
+<div id="page-books" class="page">
+    <main class="py-20 bg-beige-600">
+        <div class="container mx-auto px-6">
+            <h1 class="ms-page-title text-5xl font-bold text-center text-midnight_green mb-12">کتبِ اکابرینِ
+                اہلسنت</h1>
+            
+            <!-- 
+              FIX: The container is now empty. 
+              The loadBooks() function will add a loader here, and then the dynamic book cards.
+            -->
+            <div id="books-container" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-center">
+                <!-- Static content has been removed from here -->
+            </div>
         </div>
+    </main>
+</div>
 
         <div id="page-ask" class="page">
             <main class="py-20 bg-white">
@@ -943,43 +961,49 @@
 
     <script src="../js/sawal.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const navLinks = document.querySelectorAll('.nav-link');
-            const pages = document.querySelectorAll('.page');
+      document.addEventListener('DOMContentLoaded', function () {
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
 
-            function showPage(pageId) {
-                pages.forEach(page => {
-                    page.classList.remove('active');
-                });
-                const activePage = document.getElementById(pageId);
-                if (activePage) {
-                    activePage.classList.add('active');
-                }
-                window.scrollTo(0, 0);
-            }
-
-            navLinks.forEach(link => {
-                link.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const pageId = this.getAttribute('href').substring(1);
-                    window.location.hash = pageId;
-                });
+        function showPage(pageId) {
+            pages.forEach(page => {
+                page.classList.remove('active');
             });
+            const activePage = document.getElementById(pageId);
+            if (activePage) {
+                activePage.classList.add('active');
 
-            function handleHashChange() {
-                const hash = window.location.hash.substring(1) || 'home';
-                showPage('page-' + hash);
+                // --- THIS IS THE FIX ---
+                // If the page being shown is the books page, call the loadBooks function.
+                if (pageId === 'page-books') {
+                    loadBooks();
+                }
             }
+            window.scrollTo(0, 0);
+        }
 
-            window.addEventListener('hashchange', handleHashChange);
-            handleHashChange();
-
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const pageId = this.getAttribute('href').substring(1);
+                window.location.hash = pageId;
             });
         });
+
+        function handleHashChange() {
+            const hash = window.location.hash.substring(1) || 'home';
+            showPage('page-' + hash);
+        }
+
+        window.addEventListener('hashchange', handleHashChange);
+        handleHashChange();
+
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    });
     </script>
 
 </body>
